@@ -1,3 +1,4 @@
+const path = require(`path`);
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -6,6 +7,13 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: path.join(__dirname, `src`, `images`),
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -26,7 +34,23 @@ module.exports = {
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
-    },
+    },{
+    resolve: 'gatsby-source-prismic-graphql',
+      options: {
+        repositoryName: 'tracey-comic', // (REQUIRED, replace with your own)
+        pages: [{ // (optional, builds pages dynamically)
+        type: 'Podcast',         // TypeName from prismic
+        match: '/podcasts/:uid',  // Pages will be generated under this pattern
+        path: '/podcasts',        // Placeholder page for unpublished documents
+        component: require.resolve('./src/pages/podcast.js'),
+
+      },{
+        type: 'Homepage',
+        path: '/homepage',
+        component: require.resolve('./src/pages/homepage.js'),
+      }],
+    }
+  }
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

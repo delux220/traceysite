@@ -83,6 +83,7 @@ query HomepageQuery{
 }
 `
 const HomePage = (props) => {
+  
   const page = props.data.prismic.allHomepages.edges[0];
   const podcasts = props.data.prismic.allPodcasts.edges;
  console.log(page);
